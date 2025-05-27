@@ -74,11 +74,11 @@ After the training, we split the trained model into two: **hide network and reve
 
 **Hide Network**
 
-![Screenshot](hide.png)
+![Screenshot](models/hide.png)
 
 **Reveal Network**
 
-![Screenshot](reveal.png)
+![Screenshot](models/reveal.png)
 
 The hide network is used by the **sender**; while the reveal network is supposed to be used by the **receiver**.The receiver has access only to the container image.In addition to the normal steganographic hiding mechanism, we also **encrypt(block shuffle)** our secret images for added security.Therefore , both the **sender and the receiver** shares a **symmetric key** for encrypting/decrypting the shuffled secret message. The encryption is performed by the sender on the **input secret image**; whereas the decryption is performed by the receiver on the **final decode image**.
 
@@ -131,11 +131,11 @@ Sample results for a pair of input images - Secret & Cover
 
 **Inputs**: Secret and Cover
 
-![Screenshot](input.png)
+![Screenshot](results/input.png)
 
 **Outputs**: Secret and Cover
 
-![Screenshot](output.png)
+![Screenshot](results/output.png)
 
 **Trian MSE:** 0.03, **Test MSE:** 0.02
 
@@ -146,16 +146,17 @@ Sample results for a pair of input videos - Secret & Cover
 **Inputs**: Secret and Cover
 
 <p align="left">
-  <img  src="secret_input.gif"  width="224" height="224">
-  <img  src="cover_input.gif" width="224" height="224">
+  <img  src="videos/secret_input.gif"  width="224" height="224">
+  <img  src="videos/cover_input.gif" width="224" height="224">
 </p>
 <br>
 
 **Outputs**: Secret and Cover
 <p align="left">
-  <img  src="secret_outvid.gif" width="224" height="224">
-  <img  src="cover_outvid.gif" width="224" height="224">
+  <img  src="videos/secret_outvid.gif" width="224" height="224">
+  <img  src="videos/cover_outvid.gif" width="224" height="224">
 </p>
+
 
 
 ## TODO
@@ -171,13 +172,10 @@ Sample results for a pair of input videos - Secret & Cover
 * Implement **custom** technique for hiding pixels across **multiple frames** using **temporal** information
 
 
-
 ## Acknowledgments
 * [Hiding images in plain sight: Deep steganography](https://papers.nips.cc/paper/6802-hiding-images-in-plain-sight-deep-steganography)
 * https://github.com/harveyslash/Deep-Steganography
+* https://towardsdatascience.com/nips-2017-google-hiding-images-in-plain-sight-deep-steganography-with-interactive-code-e5efecae11ed
+* https://www.pyimagesearch.com/2018/06/04/keras-multiple-outputs-and-multiple-losses/
 * https://machinelearningmastery.com/keras-functional-api-deep-learning/
-* http://theorangeduck.com/page/neural-network-not-working
-* https://gist.github.com/gyglim/1f8dfb1b5c82627ae3efcfbbadb9f514
-* https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_photo/py_non_local_means/py_non_local_means.html
-* https://stackoverflow.com/questions/52800025/keras-give-input-to-intermediate-layer-and-get-final-output
-* https://keras.io/models/model/
+
