@@ -74,11 +74,11 @@ After the training, we split the trained model into two: **hide network and reve
 
 **Hide Network**
 
-![Screenshot](models/hide.png)
+![Screenshot](model/hide.png)
 
 **Reveal Network**
 
-![Screenshot](models/reveal.png)
+![Screenshot](model/reveal.png)
 
 The hide network is used by the **sender**; while the reveal network is supposed to be used by the **receiver**.The receiver has access only to the container image.In addition to the normal steganographic hiding mechanism, we also **encrypt(block shuffle)** our secret images for added security.Therefore , both the **sender and the receiver** shares a **symmetric key** for encrypting/decrypting the shuffled secret message. The encryption is performed by the sender on the **input secret image**; whereas the decryption is performed by the receiver on the **final decode image**.
 
@@ -146,30 +146,16 @@ Sample results for a pair of input videos - Secret & Cover
 **Inputs**: Secret and Cover
 
 <p align="left">
-  <img  src="videos/secret_input.gif"  width="224" height="224">
-  <img  src="videos/cover_input.gif" width="224" height="224">
+  <img  src="Videos/secret_input.gif"  width="224" height="224">
+  <img  src="Videos/cover_input.gif" width="224" height="224">
 </p>
 <br>
 
 **Outputs**: Secret and Cover
 <p align="left">
-  <img  src="videos/secret_outvid.gif" width="224" height="224">
-  <img  src="videos/cover_outvid.gif" width="224" height="224">
+  <img  src="Videos/secret_outvid.gif" width="224" height="224">
+  <img  src="Videos/cover_outvid.gif" width="224" height="224">
 </p>
-
-## Tips and Tricks
-
-* Since the model has two inputs and two outputs we use a **custom generator** to feed the model with input images and labels from the dataset **directory**.In this autoencoder based approach, we feed the input images(two) to the model from the same directory with **different seed** values.The **ouput labels**  for the model will be  the corresponding (two)input images of the model, in each iteration.
-* To implement the **custom loss function** we need to calculate the hide and reveal loss separately and add them up using custom **loss weights**. Also, we need to pass these loss functions as **custom objects** for prediction at runtime.
-* Once the model is trained together, we need to **split** them into **hide and reveal networks**.We can easily the separate the encoder (initial block)  form the parent model by specifying the required **intermediate layer** as its final output layer.On the other hand, for the **decoder** part we need to create a **new input layer** and connect  it to the lower layers(with weights). This can be accomplished by **re-initializing** these layers(with same name) and **reloading** the corresponding weights from the parent model.
-* Since the current model support only **lossless formats**, we need to ensure that the output container image is not modified before decoding.Also, make sure you save the container video using an **uncompressed**(lossless) codec/format eg:-Huffman HFYU, Lagarith LAGS etc.
-* You can use a permutation based **block shuffling** technique for **encrypting** your input secret images. Basically you divide the image into blocks of fixed size and permute them according to a **predefined sequence**(shared secret key) before hiding them using the model. The **receiver** can finally **decode** the secret image from the model(reveal) output using this secret key.
-* To **monitor the training** progress and visualize the images during the training, we need to implement a **custom tensorboard image logger**, since keras does not have a built-in image logger(or use matplotlib).
-* Use **learning rate decay** and higher **batch size**(better GPU) for **faster** training and/or convergence.
-* Make sure you **don't use a "relu"** activation on the **final layers** corresponding to the model outputs.
-* Don't forget to **denormalize** the final output images for **viewing**, if you have normalized the input images during **training** process.
-* **Accuracy** has little meaning in case of autoencoder networks, since we ares essentially performing a **regression** task.We can use **MSE or KL divergence**(on unseen data) as metrics to evaluate the **performance** of an autoencoder.
-
 
 
 ## TODO
@@ -184,19 +170,11 @@ Sample results for a pair of input videos - Secret & Cover
 * Try GAN based **adversarial** training, for improving **imperceptibility**
 * Implement **custom** technique for hiding pixels across **multiple frames** using **temporal** information
 
-## Versioning
 
-Version 1.0
-
-## Authors
-
-Anil Sathyan
 
 ## Acknowledgments
 * [Hiding images in plain sight: Deep steganography](https://papers.nips.cc/paper/6802-hiding-images-in-plain-sight-deep-steganography)
 * https://github.com/harveyslash/Deep-Steganography
-* https://towardsdatascience.com/nips-2017-google-hiding-images-in-plain-sight-deep-steganography-with-interactive-code-e5efecae11ed
-* https://www.pyimagesearch.com/2018/06/04/keras-multiple-outputs-and-multiple-losses/
 * https://machinelearningmastery.com/keras-functional-api-deep-learning/
 * http://theorangeduck.com/page/neural-network-not-working
 * https://gist.github.com/gyglim/1f8dfb1b5c82627ae3efcfbbadb9f514
